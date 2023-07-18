@@ -1,0 +1,107 @@
+class Exterminator : Actor
+{
+	Default
+	{
+		Health 150;
+		Radius 26;
+		Height 53;
+		Mass 100;
+		Speed 0;
+		PainChance 170;
+		Monster;
+		+FLOORCLIP
+		+NOBLOOD
+		SeeSound "chainguy/sight";
+		PainSound "chainguy/pain";
+		DeathSound "chainguy/death";
+		ActiveSound "chainguy/active";
+		AttackSound "chainguy/attack";
+		Obituary "$OB_CHAINGUY";
+		Tag "$FN_HEAVY";
+		Dropitem "Chaingun";
+	}
+	States
+	{
+	Spawn:
+		CPOS AA 10 A_Look;
+		Loop;
+	See:
+		CPOS AABBCCBB 1 {
+		A_Chase("melee","missile",CHF_NODIRECTIONTURN);
+		A_FaceTarget(1.5);
+		A_Recoil(-0.1);
+		}
+		Loop;
+	Missile:
+		CPOS DDDDDDDDDDDDDDDDDDDDD 1
+		{
+		A_FaceTarget(1.5);
+		A_Recoil(-0.1);
+		}
+		CPOS E 2 {
+		A_FaceTarget(1.5);
+		A_Recoil(-0.1);
+		}
+		CPOS FE 4 BRIGHT {A_CPosAttack();
+		A_FaceTarget(1.5);
+		A_Recoil(-0.1);
+		}
+		CPOS F 1 A_CPosRefire;
+		Goto Missile+1;
+	Pain:
+		CPOS G 3;
+		CPOS G 3 A_Pain;
+		Goto See;
+	Death:
+		CPOS H 5;
+		CPOS I 5 A_Scream;
+		CPOS J 5 A_NoBlocking;
+		CPOS KLM 5;
+		CPOS N -1;
+		Stop;
+	XDeath:
+		CPOS O 5;
+		CPOS P 5 A_XScream;
+		CPOS Q 5 A_NoBlocking;
+		CPOS RS 5;
+		CPOS T -1;
+		Stop;
+	Raise:
+		CPOS N 5;
+		CPOS MLKJIH 5;
+		Goto See;
+	}
+	
+	void A_CPosAttack()
+	{
+		if (target)
+		{
+			if (bStealth) visdir = 1;
+			A_StartSound(AttackSound, CHAN_WEAPON);
+			A_FaceTarget(1.5);
+			double slope = AimLineAttack(angle, MISSILERANGE);
+			double ang = angle + Random2[CPosAttack]() * (22.5/256);
+			int damage = Random[CPosAttack](1, 5) * 3;
+			LineAttack(ang, MISSILERANGE, slope, damage, "Hitscan", "Bulletpuff");
+		}
+	}
+	
+	void A_CPosRefire()
+	{
+		// keep firing unless target got out of sight
+		A_FaceTarget(1.5);
+		if (Random[CPosRefire](0, 255) >= 40)
+		{
+			if (!target
+				|| HitFriend()
+				|| target.health <= 0
+				|| !CheckSight(target, SF_SEEPASTBLOCKEVERYTHING|SF_SEEPASTSHOOTABLELINES))
+			{
+				SetState(SeeState);
+			}
+		}
+	}
+	
+	
+}
+

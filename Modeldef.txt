@@ -1,0 +1,35 @@
+Model exterminator 
+{
+Path "models"
+Model 0 "EXTERMINATOR.iqm" 
+Skin 0 "EXTERMINATOR.png" 
+
+Model 1 "EXTERMINATOR_lhand.iqm" 
+Skin 0 "EXTERMINATOR.png" 
+
+Model 2 "EXTERMINATOR_rhand.iqm" 
+Skin 0 "EXTERMINATOR.png" 
+Scale 13.5 13.5 13.5 
+Offset 0 0 0 
+AngleOffset 90
+//MODELSAREATTACHMENTS
+
+FrameIndex CPOS A 0 0
+FrameIndex CPOS B 0 0 
+FrameIndex CPOS C 0 0 
+FrameIndex CPOS D 0 10 FrameIndex CPOS D 1 10 FrameIndex CPOS D 2 10 
+FrameIndex CPOS E 0 20 FrameIndex CPOS E 1 20 FrameIndex CPOS E 2 20 
+FrameIndex CPOS F 0 10 FrameIndex CPOS F 1 10 FrameIndex CPOS F 2 10 
+FrameIndex CPOS G 0 0 
+FrameIndex CPOS H 0 0 
+FrameIndex CPOS I 0 0 
+FrameIndex CPOS J 0 0 
+FrameIndex CPOS K 0 0 
+FrameIndex CPOS L 0 0 
+FrameIndex CPOS M 0 0 
+FrameIndex CPOS N 0 0 
+
+}
+
+
+
